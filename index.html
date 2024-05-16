@@ -75,26 +75,62 @@
         <div class="podium">
             <div class="stand first-place">
                 <div class="place-number">1st</div>
-                <div class="player-name">Player 1</div>
-                <div class="score">X palabras adivinadas</div>
+                <div class="player-name" id="player-name1">Player 1</div>
+                <div class="score"><span id="score1">X</span> palabras adivinadas</div>
             </div>
             <div class="stand second-place">
                 <div class="place-number">2nd</div>
-                <div class="player-name">Player 2</div>
-                <div class="score">X palabras adivinadas</div>
+                <div class="player-name" id="player-name2">Player 2</div>
+                <div class="score"><span id="score2">X</span> palabras adivinadas</div>
             </div>
             <div class="stand third-place">
                 <div class="place-number">3rd</div>
-                <div class="player-name">Player 3</div>
-                <div class="score">X palabras adivinadas</div>
+                <div class="player-name" id="player-name3">Player 3</div>
+                <div class="score"><span id="score3">X</span> palabras adivinadas</div>
             </div>
         </div>
         <div>
-            <button>
+            <button id="button">
                 Actualizar Podium
             </button>
         </div>
     </main>
 </body>
+<script>
+
+// 1. Al hacer click en el botón Actualizar Podium , debemos hacer una peticion GET mediante fetch a la URL adecuada
+// 2. Fíjate bien en el tipo de datos que devuelve la llamada
+// 3. Actualiza el nombre del jugador y las palabras adivinadas en cada nodo del DOM correspondiente. 
+//    Es decir, el jugador con más punto, tiene que ir en el podio amarillo. Añade los ids que necesites.
+
+const button = document.querySelector("#button");
+
+const playerName1 = document.querySelector("#player-name1");
+const playerName2 = document.querySelector("#player-name2");
+const playerName3 = document.querySelector("#player-name3");
+const guessedWords1 = document.querySelector("#score1");
+const guessedWords2 = document.querySelector("#score2");
+const guessedWords3 = document.querySelector("#score3");
+
+button.addEventListener('click', async function(){
+    const response = await fetch("https://score-word-of-the-dat.onrender.com/scores");
+    console.log(response);
+
+    const data = await response.json();
+    console.log(data);
+
+    playerName1.textContent = data[0].nombre;
+    playerName2.textContent = data[1].nombre;
+    playerName3.textContent = data[2].nombre;
+
+    guessedWords1.textContent = data[0].puntos;
+    guessedWords2.textContent = data[1].puntos;
+    guessedWords3.textContent = data[2].puntos;
+});
+
+
+
+
+</script>
 
 </html>
